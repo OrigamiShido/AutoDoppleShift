@@ -137,7 +137,7 @@ if size(S_all,1) ~= length(F) || size(S_all,2) ~= length(T_all)
 end
 
 % 绘制时频图（不显示图窗，最大化）
-fig = figure('Visible', 'on');
+fig = figure('Visible', 'off');
 set(fig, 'Units', 'normalized', 'Position', [0 0 1 1]); % 最大化
 % imagesc(F+center_frequency, T_all, 20*log10(abs(S_all.')),[-12,-6]); axis xy;% 小天线对数坐标窗blackman
 imagesc(F+center_frequency, T_all, 20*log10(abs(S_all.')),[-10,-4]); axis xy;% 锅天线对数坐标窗blackman

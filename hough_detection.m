@@ -1,4 +1,4 @@
-function [] = hough_detection(f,t,s)
+function [result] = hough_detection(f,t,s)
 %HOUGH_DETECTION 此处显示有关此函数的摘要
 %   此处显示详细说明
 % 1. STFT幅值谱
@@ -29,6 +29,7 @@ colormap jet;
 colorbar;
 hold on;
 
+rates=zeros(1,length(lines));
 for k = 1:length(lines)
     % 图像坐标到物理坐标
     x1 = interp1(1:length(f), f, lines(k).point1(1));
@@ -40,8 +41,10 @@ for k = 1:length(lines)
     % 计算多普勒频移率
     doppler_rate = (x2 - x1) / (y2 - y1); % Hz/s
     fprintf('Line %d: Doppler rate = %.3f Hz/s\n', k, doppler_rate);
+    rates(k)=doppler_rate;
 end
 hold off;
 legend('Detected Doppler Lines');
+result=mean(rates);
 end
 

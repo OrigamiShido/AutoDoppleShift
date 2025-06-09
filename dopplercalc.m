@@ -6,8 +6,8 @@ latitude=30.5288888;
 longitude=114.3530555;
 altitude=56;
 minelevation=60;
-durationtimeSeconds=300;
-starttime=datetime(2025,5,31,14,0,0,'TimeZone',hours(8));
+durationtimeSeconds=120;
+starttime=datetime(2025,5,17,15,44,0,'TimeZone',hours(8));
 sampletime=1;
 
 %% 模拟环境
@@ -23,7 +23,7 @@ gs=groundStation(sc,Name='WHU',Latitude=latitude,Longitude=longitude,Altitude=al
 %% 导入卫星
 disp('importing satellites...')
 % 创建和读取卫星，渲染轨道
-sat=satellite(sc,[pwd,'\gp.tle'],OrbitPropagator="sgp4");
+sat=satellite(sc,[pwd,'\gp2.tle'],OrbitPropagator="sgp4");
 %% 预报多普勒频移
 disp('Predicting Doppler shift...')
 carrierFrequency=11.325e9;
