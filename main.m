@@ -10,9 +10,10 @@ frequencyRate=dopplercalc();
 analysisData=process_all_files([pwd,'\data'],'result','stft');
 
 %% 检测和找到多普勒频移量
-doppler_rates=hough_detection(analysisData(k).frequency,analysisData(k).time,analysisData(k).Signal);
-% doppler_rates2=hough_detection_precise(analysisData(k).frequency,analysisData(k).time,analysisData(k).Signal);
-
+% doppler_rates=hough_detection(analysisData(k).frequency,analysisData(k).time,analysisData(k).Signal);
+doppler_rates2=hough_detection_precise(analysisData(k).frequency,analysisData(k).time,analysisData(k).Signal);
+% interactive(analysisData(k).frequency,analysisData(k).time,analysisData(k).Signal);
+% IntensitySlopeApp(analysisData(k).frequency,analysisData(k).time,analysisData(k).Signal);
 %% 找到最接近的卫星名称
 [~,idx]=min(abs(doppler_rates-frequencyRate(string(targetTime(k):seconds(1):targetTime(k)+seconds(5)),:)),[],2);
 satelliteResult=frequencyRate(:,unique(idx{:,:},'stable')).Properties.VariableNames;
