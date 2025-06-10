@@ -1,15 +1,12 @@
-function [] = hough_detection_precise(f,t,s)
+function [dopplerResult] = hough_detection_precise(f,t,s)
 % Doppler Line Detection and Slope Fitting for Noisy STFT Spectrograms
 % 适用于 analysisData 结构体，包含 frequency, time, Signal 字段
 
 % 1. STFT幅值谱，并归一化
 S_abs = abs(s);
-S_norm = mat2gray(S_abs);
 
 % 2. 对数变换增强对比度
-S_log = log(1 + S_norm);
-
-% 3. 自适应阈值二值化
+S_log = 20*log(S_abs);
 bw = imbinarize(S_log, 'adaptive', 'ForegroundPolarity', 'bright', 'Sensitivity', 0.6);
 
 % 4. 去除小噪点和形态学闭运算补全断点
@@ -31,6 +28,8 @@ title('Detected Doppler Lines');
 colormap jet;
 colorbar;
 hold on;
+
+result=zeros(1,length(lines));
 
 for k = 1:length(lines)
     % 端点像素坐标
@@ -76,9 +75,11 @@ for k = 1:length(lines)
         fprintf('Line %d: Doppler rate (endpoint only) = %.3f Hz/s, points used: %d\n', ...
                 k, doppler_rate, numel(time_pts));
     end
+    result(k)=doppler_rate;
 end
 
 hold off;
 legend('Detected Points', 'Fitted Line', 'Location', 'best');
+dopplerResult=mean(result);
 end
 

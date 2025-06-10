@@ -4,18 +4,21 @@ function [result] = hough_detection(f,t,s)
 % 1. STFT幅值谱
 S_abs = abs(s);
 % S_norm = mat2gray(S_abs); % 归一化
+imagesc(f, t, S_abs);
 
 % 2. 对数增强与二值化
 S_log = 20*log(S_abs);
-bw = imbinarize(S_log, 'adaptive', 'ForegroundPolarity', 'bright', 'Sensitivity', 0.6);
+bw = imbinarize(S_log, 'adaptive', 'ForegroundPolarity', 'bright', 'Sensitivity', 0.9);
+imagesc(f, t, bw);
 
 % 3. 去噪和形态学闭运算
 bw = bwareaopen(bw, 10);
 bw = imclose(bw, strel('line', 7, 0)); % 横向闭运算，可调长度
+imagesc(f, t, bw);
 
 % 4. 霍夫变换检测直线
 [H, theta, rho] = hough(bw);
-peaks = houghpeaks(H, 6, 'threshold', ceil(0.2 * max(H(:)))); % 最多6条直线
+peaks = houghpeaks(H, 9, 'threshold', ceil(0.2 * max(H(:)))); % 最多9条直线
 lines = houghlines(bw, theta, rho, peaks, 'FillGap', 12, 'MinLength', 20);
 
 % 5. 可视化原频谱和所有直线
