@@ -3,7 +3,7 @@ function [slope]=IntensitySlopeApp(f,t,s)
 fig = uifigure('Name', '强度图像多点拟合直线', 'Position', [100,100,700,600]);
 ax = uiaxes(fig, 'Position', [60, 110, 500, 450]);
 hold(ax, 'on');
-imagesc(ax, f,t,abs(s));
+imagesc(ax, f,t,20*log10(abs(s)),[-10,-4]);
 axis(ax, 'xy'); % y正向向上
 xlabel(ax, 'X'); ylabel(ax, 'Y'); colorbar(ax);
 title(ax, '多次点击选点，拟合直线');
