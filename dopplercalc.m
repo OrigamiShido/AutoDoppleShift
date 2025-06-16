@@ -1,13 +1,13 @@
-function [frequencyRate,azimuth,elevations]=dopplercalc()
+function [frequencyRate,azimuth,elevations]=dopplercalc(targetTime)
 %% 定义数值
 % tic
 disp('begin...')
 latitude=30.5288888;
 longitude=114.3530555;
 altitude=56;
-minelevation=30;
+minelevation=0;
 durationtimeSeconds=120;
-starttime=datetime(2025,5,17,15,44,0,'TimeZone',hours(8));
+starttime=targetTime;
 sampletime=1;
 
 %% 模拟环境
@@ -58,14 +58,14 @@ rowname=string(starttime:seconds(sampletime):starttime+seconds(durationtimeSecon
 azimuth=array2table(squeeze(azimuth),"RowNames",rowname,"VariableNames",sat.Name);
 elevations=array2table(squeeze(elevations),"RowNames",rowname,"VariableNames",sat.Name);
 
-%% 设置卫星的可见性(optional)
-
-disp('computing visibility...')
-ac=access(gs,sat);
-intvls = accessIntervals(ac);
-intvls = sortrows(intvls,"StartTime","ascend");
-% 切换时区
-intvls.StartTime.TimeZone='Asia/Shanghai';
-intvls.EndTime.TimeZone='Asia/Shanghai';
+% %% 设置卫星的可见性(optional)
+% 
+% disp('computing visibility...')
+% ac=access(gs,sat);
+% intvls = accessIntervals(ac);
+% intvls = sortrows(intvls,"StartTime","ascend");
+% % 切换时区
+% intvls.StartTime.TimeZone='Asia/Shanghai';
+% intvls.EndTime.TimeZone='Asia/Shanghai';
 
 end

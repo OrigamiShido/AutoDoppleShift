@@ -8,12 +8,12 @@ S_abs = abs(s);
 % 2. 对数变换增强对比度
 S_log = 20*log(S_abs);
 % S_log=mat2gray(S_log);
-figure;
-imagesc(S_log);
+% figure;
+% imagesc(S_log);
 bw = imbinarize(S_log, 'adaptive', 'ForegroundPolarity', 'bright', 'Sensitivity', 0.6);
 % bw = imbinarize(S_log, 'global');
-figure;
-imagesc(bw);
+% figure;
+% imagesc(bw);
 
 % 4. 去除小噪点和形态学闭运算补全断点
 bw = bwareaopen(bw, 10);  % 去除小于10像素的连通域
